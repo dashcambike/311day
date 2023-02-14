@@ -1,0 +1,25 @@
+---
+layout: null
+---
+
+.buttonlink {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: {{ site.link | default: "#008AFF" }};
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 2em;
+  font-weight: normal;
+  line-height: 1.5;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+.buttonlink:hover {
+  background-color: {{ site.hover-col | default: '#008ACC'}};
+}
