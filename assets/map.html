@@ -5,8 +5,9 @@
 <title>Add a line to a map using a GeoJSON source</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css" rel="stylesheet">
+<link href="/assets/css/beautifuljekyll.css" rel="stylesheet">
 <style>
-body { margin:0; padding:0; }
+    body { margin:0; padding:0; }
     #map { 
         position: absolute; 
         top: 0; right: 0; 
@@ -109,13 +110,26 @@ body { margin:0; padding:0; }
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
 <script>
     function openSidebar() {
-      document.getElementById("infoSidebar").style.width = "250px";
-      document.getElementById("main").style.marginLeft = "250px";
+        document.getElementById("infoSidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
     }
 
     function closeSidebar() {
-      document.getElementById("infoSidebar").style.width = "0";
-      document.getElementById("main").style.marginLeft= "0";
+        document.getElementById("infoSidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft= "0";
+    }
+    function iconForEventType(type) {
+        switch (type)
+        {
+            case "Bike Ride":
+                return "bicycle";
+            case "Walk":
+                return "pitch";
+            case "Tabling":
+                return "park";
+            default:
+                return "triangle";
+        }
     }
 
 	mapboxgl.accessToken = 'pk.eyJ1IjoiZGFzaGNhbWJpa2UiLCJhIjoiY2t5b21zYXRiMDFteTJuamp6OGsxYW1pMCJ9.WdwRJIoAVp4axNpMfYW2zQ';
@@ -134,7 +148,7 @@ body { margin:0; padding:0; }
             location: [40.45219457697122, -79.98373117193064],
             time: "10am",
             distance: "1 mile",
-            description: "We will start the event at St. Stanislaus Kostka Church, riding along bike lanes for almost the entire route. From the meeting location, we will head to The Point, reporting any cars parked in the bike lane to 311 using the Dashcam for your Bike app. After reaching the point, we will head back, ending at De Fer in the Strip for a coffee.",
+            description: "DEMO EVENT: We will start the event at St. Stanislaus Kostka Church, riding along bike lanes for almost the entire route. From the meeting location, we will head to The Point, reporting any cars parked in the bike lane to 311 using the Dashcam for your Bike app. After reaching the point, we will head back, ending at De Fer in the Strip for a coffee.",
         },
         {
             title: "Pittsburgh, PA: Downtown Walk",
@@ -144,7 +158,7 @@ body { margin:0; padding:0; }
             location: [41.41219457697122, -78.58373117193064],
             time: "10am",
             distance: "2 mile",
-            description: "We will start the event at St. Stanislaus Kostka Church, riding along bike lanes for almost the entire route. From the meeting location, we will head to The Point, reporting any cars parked in the bike lane to 311 using the Dashcam for your Bike app. After reaching the point, we will head back, ending at De Fer in the Strip for a coffee.",
+            description: "DEMO EVENT: We will start the event at St. Stanislaus Kostka Church, riding along bike lanes for almost the entire route. From the meeting location, we will head to The Point, reporting any cars parked in the bike lane to 311 using the Dashcam for your Bike app. After reaching the point, we will head back, ending at De Fer in the Strip for a coffee.",
         }
     ];
     const featureCollection = data.map(d =>
@@ -156,7 +170,7 @@ body { margin:0; padding:0; }
                              `Meet at </strong> ${d.time} for a ${d.distance} ${d.type.toLowerCase()}</p>` +
                              `<p>${d.description}</p>` +
                              `<p><a href="https://www.eventbrite.com/e/national-311-day-tickets-553474255397"><button class="buttonlink">RSVP</button></a></p>`,
-                icon: d.type == "Bike Ride" ? "bicycle" : "pitch",
+                icon: iconForEventType(d.type),
                 isBikeRide: d.type == "Bike Ride",
             },
             geometry: {

@@ -308,7 +308,7 @@ faqs                                      :
     description                           : 
       - Find a neighborhood event near your -- or host your own
       - >
-        Look at the map above to find a neighborhood walk or bike ride.
+        Look at the map above to find a neighborhood event -- a walk, bike ride, or tabling event.
         Meet your route leader at the time listed, and they'll teach you how to use your city's 311 system.
         This may include an app, a website, the <a href="https://dashcam.bike">Dashcam for your Bike One-Tap 311 Reporting</a>, or simply a phone call to 3-1-1.
   - title                                 : Is 311 reporting effective?
@@ -332,21 +332,26 @@ faqs                                      :
         This website and the National 311 Day Map are hosted by <a href="https://dashcam.bike">Dashcam for your Bike</a>.
   - title                                 : What support is provided to hosts?
     description                           : 
-      - Dashcam for your Bike can provide nonprofits with at-cost phone mounts.
+      - RSVP management, discounted phone mounts, and tech support
       - >
+        <p>
+        We'll collect RSVPs on EventBrite and let you know how many attendees have signed up to attend your event.
+        We can also help you find the best way to report issues to your city's 311, whether it's an app, a call, or a website.
+        </p>
         <a href="https://amzn.to/3QqCVoU" style="float:left; margin-right: 30px;"><img src="/assets/img/mount.jpg" width="250px"/></a>
         For bike rides hosted by a 501(c)(3) organization, we can provide a 50% discount on up to 25 Dashcam-compatible <a href="https://amzn.to/3QqCVoU">smartphone mounts</a>.
         
         <p>
-        This will help keep your riders safe while riding: rather than pulling over on the road to take a photo, attendees of your event can record their entire ride, then make 311 reports later when it is safe to stop.
+        This will help keep your riders safe while riding: attendees can record their entire ride, then submit 311 reports when it is safe to stop.
         The <a href="https://dashcam.bike">Dashcam for your Bike app</a> will provide a photo and GPS coordinates which can be used to fill out your city's 311 form.
         </p>
         <p> In select cities, the Dashcam app allows in-app one-tap 311 reporting.  </p>
-        <p> Email <a href="mailto:hello@dascham.bike">hello@dascham.bike</a> for more information.  </p>
+        <p> Email <a href="mailto:hello@dascham.bike">hello@dascham.bike</a> to request discounted phone mounts.</p>
   - title                                 : How can I host an event?
     description                           : 
       - <a href="https://docs.google.com/forms/d/1QTIbvoSKYTjw1BzTguUUmqkuDJxff0fcmxYqatvvUVM/">Fill out our form</a>
       - >
         If approved, we'll add your information to the map above.
         We recommend you advertise the event through your existing channels.
-        You can host either a walk or a bike ride, and you are responsible for teaching attendees what to look out for and what to submit to 311.
+        You can host a walk, bike ride, or tabling event and you are responsible for teaching attendees what to look out for and what to submit to 311.
+        We'll collect RSVPs on EventBrite and let you know how many attendees have RSVPd to your event.
