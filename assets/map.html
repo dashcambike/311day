@@ -5,43 +5,145 @@
 <title>Add a line to a map using a GeoJSON source</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css" rel="stylesheet">
-<script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
 <style>
-    body { margin: 0; padding: 0; }
-    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
-    .mapboxgl-popup {
-        max-width: 400px;
-        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+body { margin:0; padding:0; }
+    #map { 
+        position: absolute; 
+        top: 0; right: 0; 
+        bottom: 0; left: 0;
+        width:100%;
+        height:100%; 
     }
+    
+    html, body, #map{
+        height:100%;
+        margin: 0px;
+    }
+
+    .sidebar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #def4ff;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 10px;
+    }
+    .sidebar p, h3 {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .sidebarCloseButton {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+        position: absolute;
+        top: 0;
+        right: 0px;
+        font-size: 24px;
+        margin-left: 50px;
+    }
+
+    .sidebarCloseButton:hover {
+        color: #333;
+    }
+
+    .sidebarText {
+        padding-left: 10px;
+        padding-right: 30px;
+        padding-top: 0px;
+        padding-bottom: 20px;
+    }
+
+    .buttonlink {
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #008AFF;
+      color: #fff;
+      text-decoration: none;
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 2em;
+      font-weight: normal;
+      line-height: 1.5;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 4px;
+    }
+
+    #main {
+        position:relative;
+        transition: margin-left .5s;
+        padding: 16px;
+        height:100%;
+
+    }
+
+    /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+    @media screen and (max-width: 450px) {
+        .sidebar {padding-top: 15px;}
+        .sidebarCloseButton {font-size: 24px;}
+    }   
 </style>
 </head>
 <body>
-<div id="map"></div>
+
+<div id="main">
+ <div id='map'></div>
+</div>
+
+<div id="infoSidebar" class="sidebar">
+  <a href="javascript:void(0)" class="sidebarCloseButton" onclick="closeSidebar()">×</a>
+  <div id="sidebarText" class="sidebarText"></div>
+</div>
+
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
 <script>
+    function openSidebar() {
+      document.getElementById("infoSidebar").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeSidebar() {
+      document.getElementById("infoSidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft= "0";
+    }
+
 	mapboxgl.accessToken = 'pk.eyJ1IjoiZGFzaGNhbWJpa2UiLCJhIjoiY2t5b21zYXRiMDFteTJuamp6OGsxYW1pMCJ9.WdwRJIoAVp4axNpMfYW2zQ';
     const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v12',
-        center: [-77.49, 39.74],
-        zoom: 4
+        center: [-95, 40],
+        zoom: 3
     });
     const data = [
         {
+            title: "Pittsburgh, PA: Downtown Bike Ride",
             host: "Test Organization",
             url: "https://google.com",
             type: "Bike Ride",
             location: [40.45219457697122, -79.98373117193064],
             time: "10am",
-            distance: "About 2 miles",
+            distance: "1 mile",
             description: "We will start the event at St. Stanislaus Kostka Church, riding along bike lanes for almost the entire route. From the meeting location, we will head to The Point, reporting any cars parked in the bike lane to 311 using the Dashcam for your Bike app. After reaching the point, we will head back, ending at De Fer in the Strip for a coffee.",
         },
         {
+            title: "Pittsburgh, PA: Downtown Walk",
             host: "Test Organization",
             url: "https://google.com",
             type: "Walk",
             location: [41.41219457697122, -78.58373117193064],
             time: "10am",
-            distance: "About 2 miles",
+            distance: "2 mile",
             description: "We will start the event at St. Stanislaus Kostka Church, riding along bike lanes for almost the entire route. From the meeting location, we will head to The Point, reporting any cars parked in the bike lane to 311 using the Dashcam for your Bike app. After reaching the point, we will head back, ending at De Fer in the Strip for a coffee.",
         }
     ];
@@ -49,11 +151,13 @@
         ({
             type: 'Feature',
             properties: {
-                description: `<strong>Host:</strong> <a href="${d.url}">${d.host}</a><br/>` +
-                             `<strong>Time:</strong> ${d.time}<br/>` +
-                             `<strong>Distance:</strong> ${d.distance}<br/>` +
-                             `<p>${d.description}</p>`,
+                description: `<h3>${d.title}</h3>` +
+                             `<p><i>Hosted by <a href="${d.url}">${d.host}</a></i><br/>` +
+                             `Meet at </strong> ${d.time} for a ${d.distance} ${d.type.toLowerCase()}</p>` +
+                             `<p>${d.description}</p>` +
+                             `<p><a href="https://www.eventbrite.com/e/national-311-day-tickets-553474255397"><button class="buttonlink">RSVP</button></a></p>`,
                 icon: d.type == "Bike Ride" ? "bicycle" : "pitch",
+                isBikeRide: d.type == "Bike Ride",
             },
             geometry: {
                 type: 'Point',
@@ -87,7 +191,11 @@
         map.on('click', 'places', (e) => {
             // Copy coordinates array.
             const coordinates = e.features[0].geometry.coordinates.slice();
-            const description = e.features[0].properties.description;
+            let description = e.features[0].properties.description;
+            if (e.features[0].properties.isBikeRide)
+            {
+                description += `<i>This event is a bike ride. We recommend that you use a compatible <a href="https://dashcam.bike">phone mount</a> to record your ride with <a href="https://dashcam.bike">dashcam.bike</a> so you can ride hands-free and make 311 reports when it's safe to stop.</i>`;
+            }
              
             // Ensure that if the map is zoomed out such that multiple
             // copies of the feature are visible, the popup appears
@@ -96,10 +204,8 @@
                 coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
             }
              
-            new mapboxgl.Popup()
-            .setLngLat(coordinates)
-            .setHTML(description)
-            .addTo(map);
+            document.getElementById('sidebarText').innerHTML = description;
+            openSidebar();
         });
          
         // Change the cursor to a pointer when the mouse is over the places layer.
