@@ -4,12 +4,14 @@ layout: null
 
 .buttonrow {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
 }
 
 .buttonlink {
-  margin-left: auto;
-  margin-right: auto;
+  left: auto;
+  right: auto;
+  margin: 10px;
   background-color: {{ site.link | default: "#008AFF" }};
   color: #fff;
   text-decoration: none;
