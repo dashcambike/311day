@@ -84,7 +84,6 @@
     #main {
         position:relative;
         transition: margin-left .5s;
-        padding: 16px;
         height:100%;
 
     }
@@ -181,6 +180,26 @@
                 <br/><br/>\
                 The first ten people to show up at The Point get a free Dashcam for your Bike mount to help you seamlessly file 311 reports from your phone.",
         },
+        {
+            title: "Washington DC: 311 Education Day",
+            host: "To-be-announced",
+            url: "https://waba.org",
+            type: EventType.Tabling,
+            location: [38.896903867780544, -77.03649968722476],
+            time: "TBA",
+            distance: "TBA",
+            description: "A local organization will be hosting a tabling event in DC. Stay tuned and RSVP for more info.",
+        },
+        {
+            title: "New Orleans: Pothole Bike Ride",
+            host: "To-be-announced",
+            url: "https://bikeeasy.org",
+            type: EventType.BikeRide,
+            location: [29.90935672017836, -90.09926752980985],
+            time: "TBA",
+            distance: "TBA",
+            description: "A local organization will be hosting a bike ride in New Orleans. Stay tuned and RSVP for more info.",
+        },
     ];
     const featureCollection = data.map(d =>
         ({
@@ -229,7 +248,7 @@
             let description = e.features[0].properties.description;
             if (e.features[0].properties.isBikeRide)
             {
-                description += `<i>This event includes a bike ride. We recommend that you use a compatible <a href="https://dashcam.bike">phone mount</a> to record your ride with <a href="https://dashcam.bike">dashcam.bike</a> so you can ride hands-free and make 311 reports when it's safe to stop.</i>`;
+                description += `<small><i>This event includes a bike ride. We recommend that you use a compatible <a href="https://dashcam.bike">phone mount</a> to record your ride with <a href="https://dashcam.bike">dashcam.bike</a> so you can ride hands-free and make 311 reports when it's safe to stop.</i></small>`;
             }
              
             // Ensure that if the map is zoomed out such that multiple
