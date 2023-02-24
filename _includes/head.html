@@ -108,6 +108,8 @@
 
   {% if img != "" %}
   <meta property="og:image" content="{{ img | absolute_url }}">
+  {% else %}
+  <meta property="og:image" content="{{ site.avatar | absolute_url }}">
   {% endif %}
 
   {% if page.id %}
