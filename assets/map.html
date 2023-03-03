@@ -222,10 +222,10 @@
             type: 'Feature',
             properties: {
                 description: `<h3>${d.title}</h3>` +
-                             `<small><p><i>Hosted by <a href="${d.url}">${d.host}</a></i><br/>` +
+                             `<small><p><i>Hosted by <a href="${d.url}" target="_blank">${d.host}</a></i><br/>` +
                              `Meet at </strong> ${d.time} for a ${d.distance} ${nameForEventType(d.type)}</p></small>` +
                              `<p>${d.description}</p>` +
-                             `<p><a href="https://www.eventbrite.com/e/national-311-day-tickets-553474255397"><button class="buttonlink">RSVP</button></a></p>`,
+                             `<p><a href="https://www.eventbrite.com/e/national-311-day-tickets-553474255397" target="_blank"><button class="buttonlink">RSVP</button></a></p>`,
                 icon: iconForEventType(d.type),
                 isBikeRide: d.type == EventType.BikeRollWalk || d.type == EventType.BikeRide,
             },
@@ -264,7 +264,7 @@
             let description = e.features[0].properties.description;
             if (e.features[0].properties.isBikeRide)
             {
-                description += `<small><i>This event includes a bike ride. We recommend that you use a compatible <a href="https://dashcam.bike">phone mount</a> to record your ride with <a href="https://dashcam.bike">dashcam.bike</a> so you can ride hands-free and make 311 reports when it's safe to stop.</i></small>`;
+                description += `<small><i>This event includes a bike ride. We recommend that you use a compatible <a href="https://dashcam.bike" target="_blank">phone mount</a> to record your ride with <a href="https://dashcam.bike" target="_blank">dashcam.bike</a> so you can ride hands-free and make 311 reports when it's safe to stop.</i></small>`;
             }
              
             // Ensure that if the map is zoomed out such that multiple
