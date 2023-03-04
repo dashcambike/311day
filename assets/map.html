@@ -215,6 +215,18 @@
             time: "10:00 AM",
             distance: "1-2 mile loop",
             description: "An opportunity to walk with TheShop.org, XchangePgh.com, and PriveMgt.com helping to improve the neighborhood for all.",
+            anchor: 'bottom-right',
+        },
+        {
+            title: "Pittsburgh: Squirrel Hill Walk",
+            host: "Squirrel Hill Urban Coalition Bike-Pedestrian Committee",
+            url: "https://facebook.com/Sqhillbikeped",
+            type: EventType.Walk,
+            location: [40.434763270074725, -79.92323463313298],
+            time: "2:00 PM",
+            distance: "1 hour",
+            description: "We will meet at the Parklet on the corner of Beacon/Murray. I will give a brief introduction on how to download the MyBurgh app and make an account. I will also discuss other ways of communicating with 311, including Twitter, pittsburghpa.gov website and dialing 311. From there, once at least a few people have downloaded the app (giving about 20 minutes for this intro) I will help lead us on a neighborhood walk. We will make careful note of the types of issues that make the pedestrian network inaccessible or even dangerous for some or all users. When we see a broken sidewalk or a curb ramp that doesn't accommodate people in wheelchairs or mobility scooters, I will show everyone how to take a picture of the issue they see, mark its location, select the appropriate category and then send that to the city. Since it is a Saturday, calling 311 will not be as useful but I'll be sure to remind those who don't have access to the internet via phone that they have the option to call instead. I anticipate the walk will last between 30 and 40 minutes, finishing where it started. I hope to include some people in the neighborhood who get around by wheelchair or other rolling devices so they can show people what some of the old design in Squirrel Hill means for their mobility or lack-thereof in the neighborhood.",
+            anchor: 'top-left',
         },
     ];
     const featureCollection = data.map(d =>
@@ -227,6 +239,7 @@
                              `<p>${d.description}</p>` +
                              `<p><a href="https://www.eventbrite.com/e/national-311-day-tickets-553474255397" target="_blank"><button class="buttonlink">RSVP</button></a></p>`,
                 icon: iconForEventType(d.type),
+                iconanchor: d.anchor ? d.anchor : 'center',
                 isBikeRide: d.type == EventType.BikeRollWalk || d.type == EventType.BikeRide,
             },
             geometry: {
@@ -251,8 +264,10 @@
             'source': 'places',
             'layout': {
                 'icon-image': ['get', 'icon'],
+                'icon-anchor': ['get', 'iconanchor'],
                 'icon-size': 2.0,
-                'icon-allow-overlap': true
+                'icon-allow-overlap': true,
+                'icon-ignore-placement': true
             }
         });
          
