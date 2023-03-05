@@ -21,6 +21,9 @@
         margin: 0px;
     }
 
+    .med-text {
+        font-size: 0.9em;
+    }
     .sidebar {
         height: 100%;
         width: 0;
@@ -223,9 +226,16 @@
             url: "https://facebook.com/Sqhillbikeped",
             type: EventType.Walk,
             location: [40.434763270074725, -79.92323463313298],
-            time: "2:00 PM",
+            time: "2:00 pm to 3:00 pm (rain or shine)",
             distance: "1 hour",
-            description: "We will meet at the Parklet on the corner of Beacon/Murray. I will give a brief introduction on how to download the MyBurgh app and make an account. I will also discuss other ways of communicating with 311, including Twitter, pittsburghpa.gov website and dialing 311. From there, once at least a few people have downloaded the app (giving about 20 minutes for this intro) I will help lead us on a neighborhood walk. We will make careful note of the types of issues that make the pedestrian network inaccessible or even dangerous for some or all users. When we see a broken sidewalk or a curb ramp that doesn't accommodate people in wheelchairs or mobility scooters, I will show everyone how to take a picture of the issue they see, mark its location, select the appropriate category and then send that to the city. Since it is a Saturday, calling 311 will not be as useful but I'll be sure to remind those who don't have access to the internet via phone that they have the option to call instead. I anticipate the walk will last between 30 and 40 minutes, finishing where it started. I hope to include some people in the neighborhood who get around by wheelchair or other rolling devices so they can show people what some of the old design in Squirrel Hill means for their mobility or lack-thereof in the neighborhood.",
+            description: "On National 311 day, join us as we walk around Squirrel Hill and learn how to use 311 to report mobility issues that we encounter: potholes, bro-ken sidewalks, repaving, new bike racks — all of these are great 311 re-quests.<br/><br/>\
+            <b>Meet at</b> the Beacon/Murray Parklet, 5737 Beacon St, Pittsburgh, PA 15217<br/><br/>\
+            <b>What to bring</b>: comfortable shoes (if walking), a phone (smart or not), clothes that will keep you warm/dry enough for an hour outdoors, friends and family! If you do have a smartphone,\
+            you can download the MyBurgh App on Apple or Android at <a href=\"https://pittsburghpa.gov/311/contacting-311\">https://pittsburghpa.gov/311/contacting-311</a>. A phone is not required to attend this event. <br/><br/>\
+            <b>What to expect</b>: An introduction to 311, its uses, how to contact the service, and download the MyBurgh app. This will be followed by a 30-40 minute walk/roll through Squirrel Hill. We will stop and make 311 reports of mobility \
+            issues seen along the way. The walk/roll route will start and end at the same location and should take no longer than 40 minutes.<br/><br/>\
+            <b>Please note</b>: To ensure it is inclusive of people of all ages and abilities, thisevent and its route are intended to be as safe and accessible as possible.\
+            Still, this event will not shy away from encouraging attendees to experience how any current gaps encountered in the pedestrian network affect those who walk, roll or take public transit for transportation.",
             anchor: 'top-left',
         },
     ];
@@ -236,7 +246,7 @@
                 description: `<h3>${d.title}</h3>` +
                              `<small><p><i>Hosted by <a href="${d.url}" target="_blank">${d.host}</a></i><br/>` +
                              `Meet at </strong> ${d.time} for a ${d.distance} ${nameForEventType(d.type)}</p></small>` +
-                             `<p>${d.description}</p>` +
+                             `<p class="med-text">${d.description}</p>` +
                              `<p><a href="https://www.eventbrite.com/e/national-311-day-tickets-553474255397" target="_blank"><button class="buttonlink">RSVP</button></a></p>`,
                 icon: iconForEventType(d.type),
                 iconanchor: d.anchor ? d.anchor : 'center',
