@@ -127,6 +127,7 @@
         static Tabling = "tabling event";
         static BikeRollWalk = "bike ride, walk, or roll";
         static Solo = "solo event";
+        static Virtual = "virtual event";
     };
 
     function iconForEventType(type) {
@@ -143,6 +144,8 @@
                 return "bicycle";
             case EventType.Solo:
                 return "town-hall";
+            case EventType.Virtual:
+                return "communications-tower";
             default:
                 return "triangle";
         }
@@ -179,7 +182,7 @@
             url: "https://bikepgh.org",
             type: EventType.BikeRollWalk,
             location: [40.441211, -80.007069],
-            time: "12:00pm",
+            time: "at 12:00pm",
             distance: "2 mile",
             description: "The Downtown to Strip District 311 Day Celebration will be a choose-your-own-adventure style walk, run, bike ride, roll, scoot, or blade around two of Pittsburgh's most energetic (and flattest) neighborhoods. \
                 <br/><br/> \
@@ -195,7 +198,7 @@
             url: "https://waba.org/blog/2023/03/light-the-night-celebrate-311-day-with-the-dc-bike-ambassadors/",
             type: EventType.Tabling,
             location: [38.89339769999874, -77.02193706441871],
-            time: "12:00 PM",
+            time: "at 12:00 PM",
             distance: "",
             description: "Tabling event hosted by WABA's DC Bike Ambassadors, Outreach, and Advocacy staff. Will be handing out bike lights, demoing the Dashcam for Bikes app, and setting up folks with phone mounts.",
         },
@@ -205,7 +208,7 @@
             url: "https://bikeeasy.org",
             type: EventType.BikeRide,
             location: [29.90935672017836, -90.09926752980985],
-            time: "TBA",
+            time: "at a to-be-announced time",
             distance: "TBA",
             description: "A local organization will be hosting a bike ride in New Orleans. Stay tuned and RSVP for more info.",
         },
@@ -215,7 +218,7 @@
             url: "https://XchangePgh.com",
             type: EventType.Solo,
             location: [40.45686285167887, -79.90465129480751],
-            time: "10:00 AM",
+            time: "at 10:00 AM",
             distance: "1-2 mile loop",
             description: "An opportunity to walk with TheShop.org, XchangePgh.com, and PriveMgt.com helping to improve the neighborhood for all.",
             anchor: 'bottom-right',
@@ -226,7 +229,7 @@
             url: "https://facebook.com/Sqhillbikeped",
             type: EventType.Walk,
             location: [40.434763270074725, -79.92323463313298],
-            time: "2:00 pm to 3:00 pm (rain or shine)",
+            time: "at 2:00 pm to 3:00 pm (rain or shine)",
             distance: "1 hour",
             description: "On National 311 day, join us as we walk around Squirrel Hill and learn how to use 311 to report mobility issues that we encounter: potholes, bro-ken sidewalks, repaving, new bike racks — all of these are great 311 re-quests.<br/><br/>\
             <b>Meet at</b> the Beacon/Murray Parklet, 5737 Beacon St, Pittsburgh, PA 15217<br/><br/>\
@@ -238,6 +241,19 @@
             Still, this event will not shy away from encouraging attendees to experience how any current gaps encountered in the pedestrian network affect those who walk, roll or take public transit for transportation.",
             anchor: 'top-left',
         },
+        {
+            title: "Buffalo: Virtual Reporting Day",
+            host: "GObike Buffalo",
+            url: "https://www.facebook.com/events/627123475917474/",
+            type: EventType.Virtual,
+            location: [42.88642266223848, -78.87811611433078],
+            time: "anytime",
+            distance: "",
+            description: "GObike is hosting a virtual event and encouraging residents to report issues they have noticed while getting around Buffalo.<br/><br/>\
+                         Locally, GObike has been encouraging the use of this service since it launched to help crowdsource safety improvements for biking and walking and rolling and using public transit.<br/><br/>\
+                         This mostly results in obvious reports, such as potholes, unplowed bike lanes and cycle tracks, glass and garbage in the street and cycle tracks, but also includes reporting such things as illegal parking on sidewalks and bike lanes and cycle tracks.<br/><br/>\
+                         These reports not only help ensure people walking, biking, and rolling stay safe, they also help cities prioritize their limited resources. When the city analyzes data on calls and app usage, they can better prioritize their services.<br/><br/>",
+        },
     ];
     const featureCollection = data.map(d =>
         ({
@@ -245,7 +261,7 @@
             properties: {
                 description: `<h3>${d.title}</h3>` +
                              `<small><p><i>Hosted by <a href="${d.url}" target="_blank">${d.host}</a></i><br/>` +
-                             `Meet at </strong> ${d.time} for a ${d.distance} ${nameForEventType(d.type)}</p></small>` +
+                             `Meet ${d.time} for a ${d.distance} ${nameForEventType(d.type)}</p></small>` +
                              `<p class="med-text">${d.description}</p>` +
                              `<p><a href="https://www.eventbrite.com/e/national-311-day-tickets-553474255397" target="_blank"><button class="buttonlink">RSVP</button></a></p>`,
                 icon: iconForEventType(d.type),
