@@ -204,13 +204,16 @@
         },
         {
             title: "New Orleans: Pothole Bike Ride",
-            host: "To-be-announced",
-            url: "https://bikeeasy.org",
+            host: "David Meza at Bike Easy",
+            url: "https://bikeeasy.org/event/311-day-report-bike-lane-issues/",
             type: EventType.BikeRide,
-            location: [29.90935672017836, -90.09926752980985],
-            time: "at a to-be-announced time",
-            distance: "TBA",
-            description: "A local organization will be hosting a bike ride in New Orleans. Stay tuned and RSVP for more info.",
+            location: [29.94877065156725, -90.07485677017155],
+            time: "at 9:00am",
+            distance: "two hour",
+            description: "Bike Easy is putting together a short bike ride around the CBD to promote National 311 Day, a day all about reporting issues and requesting services from the City. \
+                          We’ll be riding down Loyola, Gravier, Baronne, Julia, and maybe more streets with dedicated bike lanes, and stopping to report and issues we identify to 311.\
+                          In addition, we’ll talk about our own method for reporting bike lane issues (to be used in conjunction with 311 and help track these requests).<br/><br/>\
+                          Bike Easy staff member, David Meza will be leading the ride and we’ll be joined by an organizer with the National 311 Day effort!",
         },
         {
             title: "Pittsburgh: Solo Event",
@@ -263,7 +266,8 @@
                              `<small><p><i>Hosted by <a href="${d.url}" target="_blank">${d.host}</a></i><br/>` +
                              `Meet ${d.time} for a ${d.distance} ${nameForEventType(d.type)}</p></small>` +
                              `<p class="med-text">${d.description}</p>` +
-                             `<p><a href="https://www.eventbrite.com/e/national-311-day-tickets-553474255397" target="_blank"><button class="buttonlink">RSVP</button></a></p>`,
+                             `<p><a href="https://www.eventbrite.com/e/national-311-day-tickets-553474255397" target="_blank"><button class="buttonlink">RSVP</button></a></p>` +
+                             `<p><a href="http://www.google.com/maps/place/${d.location[0]},${d.location[1]}" target="_blank">Get Directions</a></p>`,
                 icon: iconForEventType(d.type),
                 iconanchor: d.anchor ? d.anchor : 'center',
                 isBikeRide: d.type == EventType.BikeRollWalk || d.type == EventType.BikeRide,
