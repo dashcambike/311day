@@ -13,7 +13,7 @@
 title: National 311 Day
 
 # Your name to show in the footer
-author: Powered by Dashcam for your Bike, Inc
+author: Powered by dashcam.bike 
 
 ###############################################
 # --- List of links in the navigation bar --- #
@@ -25,7 +25,7 @@ navbar-links:
     - Washington DC: "https://311.dc.gov/citizen"
     - New Orleans: "https://nola311.org/"
     - Buffalo: "https://www.buffalony.gov/463/Contact-311"
-  Hosted by Dashcam.Bike: "https://dashcam.bike"
+  Hosted by dashcam.bike: "https://dashcam.bike"
 
 ################
 # --- Logo --- #
@@ -312,7 +312,7 @@ faqs                                      :
       - >
         Look at the map above to find a neighborhood event -- a walk, bike ride, or tabling event.
         Meet your route leader at the time listed, and they'll teach you how to use your city's 311 system.
-        This may include an app, a website, the <a href="https://dashcam.bike">Dashcam for your Bike One-Tap 311 Reporting</a>, or simply a phone call to 3-1-1.
+        This may include an app, a website, the <a href="https://dashcam.bike">dashcam.bike One-Tap 311 Reporting</a>, or simply a phone call to 3-1-1.
   - title                                 : Is 311 reporting effective?
     description                           : 
       - Yes! (For many report types.)
@@ -331,7 +331,7 @@ faqs                                      :
       - You are!
       - >
         National 311 Day is a decentralized way for community groups to organize their own events.
-        This website and the National 311 Day Map are hosted by <a href="https://dashcam.bike">Dashcam for your Bike</a>.
+        This website and the National 311 Day Map are hosted by <a href="https://dashcam.bike">dashcam.bike</a>.
   - title                                 : What support is provided to hosts?
     description                           : 
       - RSVP management, discounted phone mounts, and tech support
@@ -341,7 +341,7 @@ faqs                                      :
         We can also help you find the best way to report issues to your city's 311, whether it's an app, a call, or a website.
         </p>
         <a href="https://amzn.to/3QqCVoU" style="float:left; margin-right: 30px;"><img src="/assets/img/mount.jpg" width="250px"/></a>
-        For bike rides hosted by a 501(c)(3) organization, we can provide a 50% discount on up to 25 Dashcam-compatible <a href="https://amzn.to/3QqCVoU">smartphone mounts</a>.
+        For bike rides hosted by a 501(c)(3) organization, we can provide a discount on our footage-stabilizing <a href="https://amzn.to/3QqCVoU">footage-stabilizing phone mount</a>.
         
         <p>
         This will help keep your riders safe while riding: attendees can record their entire ride, then submit 311 reports when it is safe to stop.

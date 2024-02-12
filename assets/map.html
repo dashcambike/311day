@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Add a line to a map using a GeoJSON source</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-<link href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css" rel="stylesheet">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
 <link href="/assets/css/beautifuljekyll.css" rel="stylesheet">
 <style>
     body { margin:0; padding:0; }
@@ -33,7 +33,7 @@
         left: 0;
         background-color: #def4ff;
         overflow-x: hidden;
-        transition: 0.5s;
+        transition: 0.2s;
         padding-top: 10px;
     }
     .sidebar p, h3 {
@@ -109,11 +109,30 @@
   <div id="sidebarText" class="sidebarText"></div>
 </div>
 
-<script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
 <script>
+    function clicked(e) {
+        // Copy coordinates array.
+        const coordinates = e.features[0].geometry.coordinates.slice();
+        let description = e.features[0].properties.description;
+        if (e.features[0].properties.isBikeRide)
+        {
+            description += `<small><i>This event includes a bike ride. We recommend that you use a compatible <a href="https://dashcam.bike" target="_blank">phone mount</a> to record your ride with <a href="https://dashcam.bike" target="_blank">dashcam.bike</a> so you can ride hands-free and make 311 reports when it's safe to stop.</i></small>`;
+        }
+         
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+         
+        document.getElementById('sidebarText').innerHTML = description;
+        openSidebar();
+    }
     function openSidebar() {
-        document.getElementById("infoSidebar").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
+        document.getElementById("infoSidebar").style.width = "350px";
+        document.getElementById("main").style.marginLeft = "350px";
     };
 
     function closeSidebar() {
@@ -130,26 +149,6 @@
         static Virtual = "virtual event";
     };
 
-    function iconForEventType(type) {
-        // more icons: https://labs.mapbox.com/maki-icons/
-        switch (type)
-        {
-            case EventType.BikeRide:
-                return "bicycle-share";
-            case EventType.Walk:
-                return "pitch";
-            case EventType.Tabling:
-                return "park";
-            case EventType.BikeRollWalk:
-                return "bicycle";
-            case EventType.Solo:
-                return "town-hall";
-            case EventType.Virtual:
-                return "communications-tower";
-            default:
-                return "triangle";
-        }
-    }
     function nameForEventType(type) {
         switch (type)
         {
@@ -175,11 +174,12 @@
         center: [-95, 40],
         zoom: 2.6
     });
-    const data = [
+    const prevYearData = [
         {
             title: "Pittsburgh, PA: Downtown to Strip District",
             host: "Andrew Brown and BikePGH",
             url: "https://bikepgh.org",
+            year: 2023,
             type: EventType.BikeRollWalk,
             location: [40.441211, -80.007069],
             time: "at 12:00pm",
@@ -196,6 +196,7 @@
             title: "Washington DC: 311 Education Day",
             host: "Washington Area Bicyclist Association",
             url: "https://waba.org/blog/2023/03/light-the-night-celebrate-311-day-with-the-dc-bike-ambassadors/",
+            year: 2023,
             type: EventType.Tabling,
             location: [38.89339769999874, -77.02193706441871],
             time: "at 12:00 PM",
@@ -206,6 +207,7 @@
             title: "New Orleans: Pothole Bike Ride",
             host: "David Meza at Bike Easy",
             url: "https://bikeeasy.org/event/311-day-report-bike-lane-issues/",
+            year: 2023,
             type: EventType.BikeRide,
             location: [29.94877065156725, -90.07485677017155],
             time: "at 9:00am",
@@ -219,6 +221,7 @@
             title: "Pittsburgh: Solo Event",
             host: "XchangePgh.com",
             url: "https://XchangePgh.com",
+            year: 2023,
             type: EventType.Solo,
             location: [40.45686285167887, -79.90465129480751],
             time: "at 10:00 AM",
@@ -230,6 +233,7 @@
             title: "Pittsburgh: Squirrel Hill Walk",
             host: "Squirrel Hill Urban Coalition Bike-Pedestrian Committee",
             url: "https://facebook.com/Sqhillbikeped",
+            year: 2023,
             type: EventType.Walk,
             location: [40.434763270074725, -79.92323463313298],
             time: "at 2:00 pm to 3:00 pm (rain or shine)",
@@ -248,6 +252,7 @@
             title: "Buffalo: Virtual Reporting Day",
             host: "GObike Buffalo",
             url: "https://www.facebook.com/events/627123475917474/",
+            year: 2023,
             type: EventType.Virtual,
             location: [42.88642266223848, -78.87811611433078],
             time: "anytime",
@@ -258,79 +263,119 @@
                          These reports not only help ensure people walking, biking, and rolling stay safe, they also help cities prioritize their limited resources. When the city analyzes data on calls and app usage, they can better prioritize their services.<br/><br/>",
         },
     ];
-    const featureCollection = data.map(d =>
-        ({
-            type: 'Feature',
-            properties: {
-                description: `<h3>${d.title}</h3>` +
-                             `<small><p><i>Hosted by <a href="${d.url}" target="_blank">${d.host}</a></i><br/>` +
-                             `Meet ${d.time} for a ${d.distance} ${nameForEventType(d.type)}</p></small>` +
-                             `<p class="med-text">${d.description}</p>` +
-                             `<p><a href="https://www.eventbrite.com/e/national-311-day-tickets-553474255397" target="_blank"><button class="buttonlink">RSVP</button></a></p>` +
-                             `<p><a href="http://www.google.com/maps/place/${d.location[0]},${d.location[1]}" target="_blank">Get Directions</a></p>`,
-                icon: iconForEventType(d.type),
-                iconanchor: d.anchor ? d.anchor : 'center',
-                isBikeRide: d.type == EventType.BikeRollWalk || d.type == EventType.BikeRide,
-            },
-            geometry: {
-                type: 'Point',
-                coordinates: [d.location[1], d.location[0]]
-            }
-        })
-    );
+    const thisYearData = [
+        {
+            title: "Pittsburgh, PA: Downtown to Strip District",
+            host: "Armin Samii",
+            url: "https://bikepgh.org",
+            year: 2024,
+            type: EventType.BikeRollWalk,
+            location: [40.45234303923627, -79.98380388913256],
+            time: "at 5:00pm",
+            distance: "2 mile",
+            description: "Let's meet near The Terminal at St. Stanislaus's Church for a two-mile loop around some of the most frequently obstructed bike lanes in Pittsburgh.<br><br>\
+                         We'll go down Smallman, along Penn Ave, up Stanwix, along Third Ave, then back along Penn and Smallman, reporting any hazard we see along the way."
+        },
+    ];
+    const prevYearCollection = prevYearData.map(d => ({
+        type: 'Feature',
+        properties: {
+            description: `<small><i>This event was hosted in ${d.year}</i></small>` +
+                         `<h3>${d.title}</h3>` +
+                         `<small><p><i>Hosted by <a href="${d.url}" target="_blank">${d.host}</a></i><br/>` +
+                         `A ${d.distance} ${nameForEventType(d.type)}</p></small>` +
+                         `<p class="med-text">${d.description}</p>`,
+            iconanchor: d.anchor ? d.anchor : 'center',
+        },
+        geometry: {
+            type: 'Point',
+            coordinates: [d.location[1], d.location[0]]
+        }
+    }));
+    const thisYearCollection = thisYearData.map(d => ({
+        type: 'Feature',
+        properties: {
+            description: `<h3>${d.title}</h3>` +
+                         `<small><p><i>Hosted by <a href="${d.url}" target="_blank">${d.host}</a></i><br/>` +
+                         `Meet ${d.time} for a ${d.distance} ${nameForEventType(d.type)}</p></small>` +
+                         `<p class="med-text">${d.description}</p>` +
+                         `<p><a href="http://www.google.com/maps/place/${d.location[0]},${d.location[1]}" target="_blank">Get Directions</a></p>`,
+            iconanchor: d.anchor ? d.anchor : 'center',
+            isBikeRide: d.type == EventType.BikeRollWalk || d.type == EventType.BikeRide,
+        },
+        geometry: {
+            type: 'Point',
+            coordinates: [d.location[1], d.location[0]]
+        }
+    }));
  
     map.on('load', () => {
-        map.addSource('places', {
-            'type': 'geojson',
-            'data': {
-                'type': 'FeatureCollection',
-                'features': featureCollection
-            }
-        });
-        // Add a layer showing the places.
-        map.addLayer({
-            'id': 'places',
-            'type': 'symbol',
-            'source': 'places',
-            'layout': {
-                'icon-image': ['get', 'icon'],
-                'icon-anchor': ['get', 'iconanchor'],
-                'icon-size': 2.0,
-                'icon-allow-overlap': true,
-                'icon-ignore-placement': true
-            }
-        });
-         
-        // When a click event occurs on a feature in the places layer, open a popup at the
-        // location of the feature, with description HTML from its properties.
-        map.on('click', 'places', (e) => {
-            // Copy coordinates array.
-            const coordinates = e.features[0].geometry.coordinates.slice();
-            let description = e.features[0].properties.description;
-            if (e.features[0].properties.isBikeRide)
-            {
-                description += `<small><i>This event includes a bike ride. We recommend that you use a compatible <a href="https://dashcam.bike" target="_blank">phone mount</a> to record your ride with <a href="https://dashcam.bike" target="_blank">dashcam.bike</a> so you can ride hands-free and make 311 reports when it's safe to stop.</i></small>`;
-            }
-             
-            // Ensure that if the map is zoomed out such that multiple
-            // copies of the feature are visible, the popup appears
-            // over the copy being pointed to.
-            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-            }
-             
-            document.getElementById('sidebarText').innerHTML = description;
-            openSidebar();
-        });
-         
-        // Change the cursor to a pointer when the mouse is over the places layer.
-        map.on('mouseenter', 'places', () => {
-            map.getCanvas().style.cursor = 'pointer';
-        });
-         
-        // Change it back to a pointer when it leaves.
-        map.on('mouseleave', 'places', () => {
-            map.getCanvas().style.cursor = '';
+        map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png', (error, image) => {
+          if (error) throw error;
+
+          map.addImage('custom-marker', image, { sdf: true });
+          map.addSource('prevYearSource', {
+              'type': 'geojson',
+              'data': {
+                  'type': 'FeatureCollection',
+                  'features': prevYearCollection
+              }
+          });
+          map.addSource('thisYearSource', {
+              'type': 'geojson',
+              'data': {
+                  'type': 'FeatureCollection',
+                  'features': thisYearCollection
+              }
+          });
+          // Add a layer showing the places.
+          map.addLayer({
+              'id': 'prevYearLayer',
+              'type': 'symbol',
+              'source': 'prevYearSource',
+              'layout': {
+                  'icon-image': 'custom-marker',
+                  'icon-anchor': ['get', 'iconanchor'],
+                  'icon-size': 0.4,
+                  'icon-allow-overlap': true,
+                  'icon-ignore-placement': true
+              },
+              "paint": {
+                  'icon-color': "#bc670d",
+                  'icon-opacity': 0.8
+              }
+          });
+          map.addLayer({
+              'id': 'thisYearLayer',
+              'type': 'symbol',
+              'source': 'thisYearSource',
+              'layout': {
+                  'icon-image': 'custom-marker',
+                  'icon-anchor': ['get', 'iconanchor'],
+                  'icon-size': 0.7,
+                  'icon-allow-overlap': true,
+                  'icon-ignore-placement': true
+              },
+              "paint": {
+                  'icon-color':  "#a300b0",
+                  'icon-opacity': 1
+              }
+          });
+           
+          // When a click event occurs on a feature in the places layer, open a popup at the
+          // location of the feature, with description HTML from its properties.
+          map.on('click', 'prevYearLayer', clicked);
+          map.on('click', 'thisYearLayer', clicked);
+           
+          // Change the cursor to a pointer when the mouse is over the places layer.
+          map.on('mouseenter', 'places', () => {
+              map.getCanvas().style.cursor = 'pointer';
+          });
+           
+          // Change it back to a pointer when it leaves.
+          map.on('mouseleave', 'places', () => {
+              map.getCanvas().style.cursor = '';
+          });
         });
     });
 </script>
